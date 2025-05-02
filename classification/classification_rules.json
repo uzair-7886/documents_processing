@@ -1,0 +1,102 @@
+{
+    "certificate": {
+    "stop_on_find": false,
+    "rules": [
+        {
+            "gen_id": "01",
+            "rule": "(?i)(?P<certificate>\\bThis is to certify that\\b)",
+            "weight": 100
+        },
+        {
+            "gen_id": "02",
+            "rule": "(?i)(?P<certificate>\\bCERTIFICATE No:\\s*\\w+\\b)",
+            "weight": 90
+        },
+        {
+            "gen_id": "03",
+            "rule": "(?i)(?P<certificate>\\bHas met all the requirements\\b)",
+            "weight": 80
+        },
+        {
+            "gen_id": "04",
+            "rule": "(?i)(?P<certificate>\\bConducted by\\b)",
+            "weight": 70
+        },
+        {
+            "gen_id": "05",
+            "rule": "(?i)(?P<certificate>\\bSTART ON THIS [A-Z]+\\s+\\d{1,2}, \\d{4}\\b)",
+            "weight": 60
+        }
+    ]
+},
+    "examination_report": {
+    "stop_on_find": false,
+    "rules": [
+        {
+            "gen_id": "01",
+            "rule": "(?i)(?P<examination_report>\\bCERTIFICATE FOR EXAMINATION\\b)",
+            "weight": 100
+        },
+        {
+            "gen_id": "02",
+            "rule": "(?i)(?P<examination_report>\\bReference Regulations\\b)",
+            "weight": 90
+        },
+        {
+            "gen_id": "03",
+            "rule": "(?i)(?P<examination_report>\\bType Of Inspection\\b)",
+            "weight": 80
+        },
+        {
+            "gen_id": "04",
+            "rule": "(?i)(?P<examination_report>\\bDate of Inspection\\b)",
+            "weight": 70
+        },
+        {
+            "gen_id": "05",
+            "rule": "(?i)(?P<examination_report>\\bResult:\\b)",
+            "weight": 60
+        }
+    ]
+},
+"calibration_certificate": {
+    "stop_on_find": false,
+    "rules": [
+        {
+            "gen_id": "01",
+            "rule": "(?i)(?P<calibration_certificate>\\bCALIBRATION CERTIFICATE\\b)",
+            "weight": 100
+        },
+        {
+            "gen_id": "02",
+            "rule": "(?i)(?P<calibration_certificate>\\bCalibration Procedure\\b)",
+            "weight": 90
+        },
+        {
+            "gen_id": "03",
+            "rule": "(?i)(?P<calibration_certificate>\\bEnvironmental Conditions\\b)",
+            "weight": 85
+        },
+        {
+            "gen_id": "04",
+            "rule": "(?i)(?P<calibration_certificate>\\bTest Result\\b)",
+            "weight": 80
+        },
+        {
+            "gen_id": "05",
+            "rule": "(?i)(?P<calibration_certificate>\\bExpanded uncertainty of measurement\\b)",
+            "weight": 75
+        },
+        {
+            "gen_id": "06",
+            "rule": "(?i)(?P<calibration_certificate>\\bReference Equipment Detail\\b)",
+            "weight": 70
+        },
+        {
+            "gen_id": "07",
+            "rule": "(?i)(?P<calibration_certificate>\\bCalibrated\\b)",
+            "weight": 60
+        }
+    ]
+}
+}

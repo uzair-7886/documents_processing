@@ -1,0 +1,1 @@
+from .load_classification_rules import RULES

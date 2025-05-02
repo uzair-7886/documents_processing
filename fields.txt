@@ -1,0 +1,6 @@
+wrote predictions and test functions for following fields
+
+client name
+next date of inspection (for examination report)
+certificate number
+job number

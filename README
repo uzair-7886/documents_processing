@@ -1,0 +1,19 @@
+General flow:
+Flask app:
+1) Create project endpoint: Post/Create a project for each client
+    Each client has their unique id/name. The project configurations include the possible document types for that project e.g. classification report and certificates for quality dxb
+2) Extract information endpoint: Takes the document/document path as input plus the project configuration
+3) Other endpoints which might be needed: modify project, delete project
+4) Ocr the document if document_text is not available
+5) Classify the document: Either the document_type is known beforehand. For that case we dont need to classify. If classification is needed then get the possible document types for that project from the project configurations (project id is provided so we can access it)
+6) Extraction: Extract the relevant fields for that project/client. Client name is dummy field for now. To create a new rule based field, register a predictor against the field name in field_predictor_mapping.py. Then create a new .py file for it in the extraction/rules folder. Write the rules for the field in extraction_rules.json. Finally write a test for that new field. You could build/test rules using regex101.com
+7) Return the results in json format
+
+
+Important guidelines:
+1) Add unit tests for EVERY new function
+2) Add docstrings and comments 
+3) Specify input and output types for all the functions.
+
+Testing:
+1) To test do pytest file_path e.g. pytest tests\test_next_date_of_inspection.py
