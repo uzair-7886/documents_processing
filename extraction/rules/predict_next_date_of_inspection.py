@@ -89,41 +89,25 @@ def calculate_next_date(start_date_str: str, validity_duration_str: str) -> str:
     # Format result
     return end_date.strftime('%d.%m.%Y')
 
-def predict_next_date_of_inspection(document_text: str, field_name: str, document_type: str = None) -> Union[Dict, Tuple]:
-    """
-    Predict next date of inspection based on document type and content
-    Returns formatted date for certificates, or extraction results for other documents
-    """
+def predict_next_date_of_inspection(document_text: str, field_name: str, document_type: str = None) -> dict:
     if document_type == "certificate":
-        start_date = predict_course_start_date(document_text, "course_start_date")
-        validity_duration = predict_course_validity_duration(document_text, "course_validity_duration")
-        
-        # Extract the text values from the results
-        start_date_text = start_date.get('course_start_date', [])[0].get('text', '')
-        validity_duration_text = validity_duration.get('course_validity_duration', [])[0].get('text', '')
-        
+        start = predict_course_start_date(document_text, "course_start_date")
+        dur   = predict_course_validity_duration(document_text, "course_validity_duration")
         try:
-            next_date = calculate_next_date(start_date_text, validity_duration_text)
-            return {
-                'next_date_of_inspection': [{
-                    'text': next_date,
-                    'confidence': 90,
-                    'location': 0,
-                    'version': '01'
-                }]
-            }
-        except (ValueError, IndexError) as e:
-            # Return original data if date calculation fails
-            return (start_date, validity_duration)
-            
-    else:
-        content = parse_text(document_text, RULES[field_name])
-        results = get_results(content, field_name)
-        results = get_unique_candidates(results, confidence_boost=5)
-        results = format_date(results)
-        return {field_name: results}
+            s_text = (start.get('course_start_date') or [])[0]['text']
+            d_text = (dur  .get('course_validity_duration') or [])[0]['text']
+            nd     = calculate_next_date(s_text, d_text)
+            return { field_name: [{ 'text': nd, 'confidence': 90, 'location': 0, 'version': '01' }] }
+        except (IndexError, ValueError):
+            # nothing to calculate, just return “no data”
+            return { field_name: [] }
 
-
+    # non-certificate path unchanged
+    content = parse_text(document_text, RULES[field_name])
+    results = get_results(content, field_name)
+    results = get_unique_candidates(results, confidence_boost=5)
+    results = format_date(results)
+    return {field_name: results}
 # filepath='./test.docx'
 # text = docx2txt.process(filepath)
 # print(text)

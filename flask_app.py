@@ -79,17 +79,19 @@ def extract_fields():
         # Process each requested field
         for field in fields:
             predictor = field_to_predictor.get(field)
-            if predictor:
-                # Get prediction result
-                prediction = predictor(document_text, field, document_type)
-                
-                # Extract text, defaulting to first result's text if available
-                field_result = prediction.get(field, [{}])[0]
-                results[field] = field_result.get('text', 'NO DATA FOUND')
-            else:
-                # No predictor available
+            if not predictor:
                 results[field] = "NO PREDICTOR FOUND!!"
-        
+                continue
+
+            prediction = predictor(document_text, field, document_type)
+
+            # **Safe‐guard against empty lists** here:
+            candidates = prediction.get(field) or []
+            if candidates:
+                results[field] = candidates[0].get('text', 'NO DATA FOUND')
+            else:
+                results[field] = 'NO DATA FOUND'
+
         return jsonify(results)
     
     except Exception as e:
