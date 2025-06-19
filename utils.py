@@ -597,3 +597,14 @@ def download_mega_file(mega_link, download_dir=None):
     except Exception as e:
         print(f"Download error: {e}")
         return None
+    
+
+
+def to_iso_date(day: Union[str, int], month: Union[str, int], year: Union[str, int]) -> str:
+    """
+    Convert separate day, month, year into an ISO-formatted date (YYYY-MM-DD).
+    """
+    day = int(day)
+    month = int(month)
+    year = int(year)
+    return f"{year:04d}-{month:02d}-{day:02d}"
